@@ -23,11 +23,11 @@ after Node is upgraded to 22 on the host.
 ## Rationale
 
 - The vulnerability affects Server Islands — a feature not used in this theme.
-  The attack surface does not apply to the default Inkwell setup.
+  The attack surface does not apply to the default FolioCMS setup.
 - Astro 6 requires Node 22. Forcing a Node upgrade as part of v0.1.0 scope
   would block the first release on an unrelated infrastructure task.
 - Node 20 EOL is 2026-04-30. The upgrade to Node 22 should happen before then
-  regardless of Inkwell's release schedule.
+  regardless of FolioCMS's release schedule.
 
 ## Consequences
 

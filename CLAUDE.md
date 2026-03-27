@@ -41,10 +41,10 @@ Project-specific (customize after copy):
 
 ---
 
-## Project: inkwell-theme-default
+## Project: foliocms-theme-default
 
-Default Astro SSR theme for the Inkwell CMS. Reads post content from the
-filesystem via `CONTENT_DIR`. Ships with Inkwell as the reference theme.
+Default Astro SSR theme for FolioCMS. Reads post content from the
+filesystem via `CONTENT_DIR`. Ships with FolioCMS as the reference theme.
 
 ## Stack
 - Framework: Astro SSR (`@astrojs/node` adapter)
@@ -63,4 +63,4 @@ filesystem via `CONTENT_DIR`. Ships with Inkwell as the reference theme.
 
 ## Do not modify without confirming
 - Theme contract interface (frontmatter fields, content dir structure)
-  These are defined in the Inkwell core repo `docs/theme-contract.md`
+  These are defined in the FolioCMS core repo `docs/theme-contract.md`
