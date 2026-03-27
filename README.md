@@ -7,7 +7,7 @@ Ships with Inkwell out of the box.
 
 ## Requirements
 
-- Node.js 18+
+- Node.js 22+
 - An Inkwell backend with posts in `CONTENT_DIR`
 
 ## Setup

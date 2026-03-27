@@ -1,7 +1,7 @@
 # Decision Record: Astro 5 for v0.1.0, Astro 6 for v0.2.0
 
 - Date: 2026-03-27
-- Status: Accepted
+- Status: Superseded (resolved 2026-03-27)
 - Owners: @srmdn
 
 ## Context
@@ -39,6 +39,6 @@ after Node is upgraded to 22 on the host.
 
 ## Follow-up Actions
 
-- [ ] Upgrade Node to 22 on host (before 2026-04-30 — Node 20 EOL)
-- [ ] Upgrade to Astro 6 + `@astrojs/node@10` as part of v0.2.0
-- [ ] Remove this constraint note from README once resolved
+- [x] Upgrade Node to 22 on host (done 2026-03-27 — upgraded to Node 24.13.0)
+- [x] Upgrade to Astro 6 + `@astrojs/node@10` (done 2026-03-27 — Astro 6.1.1, @astrojs/node 10.0.4)
+- [x] Remove this constraint note from README once resolved
