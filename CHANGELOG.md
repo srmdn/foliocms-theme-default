@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.2.1 (2026-04-06)
+
+- **Fix**: hero image is now fetched from the API response and displayed at the top of the post page
+- **Fix**: social links (GitHub, Twitter, LinkedIn) from site settings are now shown in the footer
+- **Fix**: `/media/` path correctly proxied to the backend in reference nginx config
+
+---
+
 ## v0.2.0 (2026-04-06)
 
 API-driven content and settings.
