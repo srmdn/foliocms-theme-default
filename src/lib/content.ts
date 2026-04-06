@@ -1,62 +1,51 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import matter from 'gray-matter';
-import type { Post, PostFrontmatter } from './types';
+import type { Post } from './types';
 
-function getContentDir(): string {
-  return process.env.CONTENT_DIR ?? path.join(process.cwd(), '..', 'content', 'blog');
+interface ApiPost {
+  id: number;
+  slug: string;
+  title: string;
+  description: string;
+  tags: string; // comma-separated
+  draft: boolean;
+  publish_date: string;
+  created_at: string;
+  updated_at: string;
+  body?: string;
 }
 
-function isPublished(fm: PostFrontmatter): boolean {
-  if (fm.draft) return false;
-  const pub = new Date(fm.publishDate);
-  return !isNaN(pub.getTime()) && pub <= new Date();
+function getApiBase(): string {
+  const base = import.meta.env.FOLIO_API_URL;
+  if (!base) throw new Error('FOLIO_API_URL is not set');
+  return base.replace(/\/$/, '');
 }
 
-function readPost(slug: string): Post | null {
-  const contentDir = getContentDir();
-  const filePath = path.join(contentDir, slug, 'index.md');
-
-  if (!fs.existsSync(filePath)) return null;
-
-  const raw = fs.readFileSync(filePath, 'utf-8');
-  const { data, content } = matter(raw);
-
-  const frontmatter: PostFrontmatter = {
-    title: data.title ?? slug,
-    description: data.description,
-    publishDate: data.publishDate ?? '',
-    draft: data.draft ?? false,
-    tags: Array.isArray(data.tags) ? data.tags : [],
+function toPost(api: ApiPost): Post {
+  return {
+    slug: api.slug,
+    frontmatter: {
+      title: api.title,
+      description: api.description || undefined,
+      publishDate: api.publish_date,
+      draft: api.draft,
+      tags: api.tags ? api.tags.split(',').filter(Boolean) : [],
+    },
+    body: api.body ?? '',
   };
-
-  return { slug, frontmatter, body: content };
 }
 
-export function getPost(slug: string): Post | null {
-  const post = readPost(slug);
-  if (!post || !isPublished(post.frontmatter)) return null;
-  return post;
+export async function listPosts(): Promise<Post[]> {
+  const res = await fetch(`${getApiBase()}/api/posts`);
+  if (!res.ok) throw new Error(`Failed to fetch posts: ${res.status}`);
+  const data: ApiPost[] = await res.json();
+  return data.map(toPost);
 }
 
-export function listPosts(): Post[] {
-  const contentDir = getContentDir();
-
-  if (!fs.existsSync(contentDir)) return [];
-
-  const slugs = fs.readdirSync(contentDir).filter((entry) => {
-    const stat = fs.statSync(path.join(contentDir, entry));
-    return stat.isDirectory();
-  });
-
-  return slugs
-    .map((slug) => readPost(slug))
-    .filter((post): post is Post => post !== null && isPublished(post.frontmatter))
-    .sort((a, b) => {
-      const dateA = new Date(a.frontmatter.publishDate).getTime();
-      const dateB = new Date(b.frontmatter.publishDate).getTime();
-      return dateB - dateA;
-    });
+export async function getPost(slug: string): Promise<Post | null> {
+  const res = await fetch(`${getApiBase()}/api/posts/${encodeURIComponent(slug)}`);
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`Failed to fetch post: ${res.status}`);
+  const data: ApiPost = await res.json();
+  return toPost(data);
 }
 
 export function formatDate(dateStr: string): string {

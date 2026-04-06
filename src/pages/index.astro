@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { listPosts, formatDate } from '../lib/content';
 
-const posts = listPosts();
+const posts = await listPosts();
 const siteName = import.meta.env.SITE_NAME || 'My Blog';
 ---
 
