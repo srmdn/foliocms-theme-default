@@ -1,19 +1,19 @@
 ---
 import { marked } from 'marked';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getPost, formatDate } from '../../lib/content';
+import { getPost, getSettings, formatDate } from '../../lib/content';
 
 const { slug } = Astro.params;
 
 if (!slug) return Astro.redirect('/404');
 
-const post = await getPost(slug);
+const [post, settings] = await Promise.all([getPost(slug), getSettings()]);
 if (!post) return Astro.redirect('/404');
 
 const html = marked(post.body);
 ---
 
-<BaseLayout title={post.frontmatter.title} description={post.frontmatter.description}>
+<BaseLayout title={post.frontmatter.title} description={post.frontmatter.description} siteName={settings.siteName}>
   <a href="/" class="back-link">← Back</a>
 
   <article>

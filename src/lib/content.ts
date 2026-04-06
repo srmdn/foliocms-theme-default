@@ -1,4 +1,4 @@
-import type { Post } from './types';
+import type { Post, SiteSettings } from './types';
 
 interface ApiPost {
   id: number;
@@ -13,9 +13,16 @@ interface ApiPost {
   body?: string;
 }
 
+interface ApiSettings {
+  site_name: string;
+  site_description: string;
+  social_github: string;
+  social_linkedin: string;
+  social_twitter: string;
+}
+
 function getApiBase(): string {
-  const base = import.meta.env.FOLIO_API_URL;
-  if (!base) throw new Error('FOLIO_API_URL is not set');
+  const base = import.meta.env.BACKEND_URL ?? 'http://localhost:8090';
   return base.replace(/\/$/, '');
 }
 
@@ -46,6 +53,16 @@ export async function getPost(slug: string): Promise<Post | null> {
   if (!res.ok) throw new Error(`Failed to fetch post: ${res.status}`);
   const data: ApiPost = await res.json();
   return toPost(data);
+}
+
+export async function getSettings(): Promise<SiteSettings> {
+  const res = await fetch(`${getApiBase()}/api/settings`);
+  if (!res.ok) throw new Error(`Failed to fetch settings: ${res.status}`);
+  const data: ApiSettings = await res.json();
+  return {
+    siteName: data.site_name || 'My Blog',
+    siteDescription: data.site_description || '',
+  };
 }
 
 export function formatDate(dateStr: string): string {

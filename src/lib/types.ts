@@ -11,3 +11,8 @@ export interface Post {
   frontmatter: PostFrontmatter;
   body: string;
 }
+
+export interface SiteSettings {
+  siteName: string;
+  siteDescription: string;
+}

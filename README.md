@@ -2,20 +2,20 @@
 
 Default Astro SSR theme for [FolioCMS](https://github.com/srmdn/foliocms).
 
-Clean, minimal blog frontend. Reads Markdown posts from the filesystem.
+Clean, minimal blog frontend. Fetches posts and settings from the FolioCMS API at request time.
 Ships with FolioCMS out of the box.
 
 ## Requirements
 
 - Node.js 22+
-- A FolioCMS backend with posts in `CONTENT_DIR`
+- A running FolioCMS backend
 
 ## Setup
 
 ```bash
 npm install
 cp .env.example .env
-# Edit .env: set CONTENT_DIR to your FolioCMS content path
+# Edit .env: set BACKEND_URL to your FolioCMS backend address
 npm run build
 ```
 
@@ -23,9 +23,10 @@ npm run build
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `CONTENT_DIR` | `../content/blog` | Path to FolioCMS's content directory |
-| `SITE_NAME` | `My Blog` | Site name shown in the header and page titles |
-| `SITE_DESCRIPTION` | _(empty)_ | Meta description for the home page |
+| `BACKEND_URL` | `http://localhost:8090` | Base URL of the FolioCMS backend API |
+
+Site name and description are read from the FolioCMS settings API (`GET /api/settings`).
+Configure them in the FolioCMS admin dashboard.
 
 ## Running after build
 

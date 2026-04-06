@@ -1,12 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { listPosts, formatDate } from '../lib/content';
+import { listPosts, getSettings, formatDate } from '../lib/content';
 
-const posts = await listPosts();
-const siteName = import.meta.env.SITE_NAME || 'My Blog';
+const [posts, settings] = await Promise.all([listPosts(), getSettings()]);
 ---
 
-<BaseLayout title={siteName} description={import.meta.env.SITE_DESCRIPTION}>
+<BaseLayout title={settings.siteName} description={settings.siteDescription || undefined} siteName={settings.siteName}>
   {posts.length === 0 ? (
     <p style="color: var(--color-muted)">No posts yet.</p>
   ) : (

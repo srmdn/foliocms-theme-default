@@ -2,10 +2,10 @@
 interface Props {
   title: string;
   description?: string;
+  siteName: string;
 }
 
-const { title, description } = Astro.props;
-const siteName = import.meta.env.SITE_NAME || 'My Blog';
+const { title, description, siteName } = Astro.props;
 ---
 
 <!doctype html>
