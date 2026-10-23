@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.2.2 (2026-10-23)
+
+Security patch.
+
+- **Security**: upgraded Astro `6.1.1` to `7.4.2` and `@astrojs/node` `10.0.4` to `11.1.9`, resolving a critical XSS advisory in `define:vars` plus cache-poisoning and transitive dependency advisories; `npm audit` now reports 0 vulnerabilities
+- **Astro 7**: adopted the Rust compiler, Vite 8, and the new default `compressHTML: 'jsx'`; rendered output was compared against v0.2.1 and matches apart from expected whitespace and CSS serialization differences
+- **Verification**: `astro check` 0 errors, production build succeeds, standalone server returns 200 for home and post pages and 404 for unknown routes
+
+---
+
 ## v0.2.1 (2026-04-06)
 
 - **Fix**: hero image is now fetched from the API response and displayed at the top of the post page
