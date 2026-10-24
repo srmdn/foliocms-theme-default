@@ -1,3 +1,8 @@
+> **Archived project (October 2026).** This theme was part of FolioCMS, which
+> is no longer maintained and whose demo is offline. The source remains
+> available read-only for reference. The `foliocms.com` domain is available for
+> acquisition; contact [mail@srmdn.com](mailto:mail@srmdn.com).
+
 # foliocms-theme-default
 
 Default Astro SSR theme for [FolioCMS](https://github.com/srmdn/foliocms).
